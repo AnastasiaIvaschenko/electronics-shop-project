@@ -21,7 +21,12 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
 
+
+    def __str__(self):
+        return f"{self.__name}"
     @classmethod
     def instantiate_from_csv(cls):
         '''класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv'''
