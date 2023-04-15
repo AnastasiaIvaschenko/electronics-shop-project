@@ -12,7 +12,6 @@ def item_csv():
     return Item.instantiate_from_csv()
 
 
-
 def test_calc_total_price(item):
     assert item.calculate_total_price() == 200000
 
@@ -39,6 +38,17 @@ def test_name_setter(item):
     assert item.name == 'gena'
     with pytest.raises(ValueError):
         item.name = 'hghjghjggdgfdgfsfdsgj'
+
+
+
+def test_self_repr(item):
+    assert item.__repr__() == "Item('Смартфон', 10000, 20)"
+
+
+def test_self_str(item):
+    assert item.__str__() == 'Смартфон'
+
+
 
 
 
