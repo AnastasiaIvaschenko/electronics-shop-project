@@ -1,15 +1,35 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
 from src.item import Item
+from src.phone import Phone
 
 
 
 @pytest.fixture
 def item():
     return Item("Смартфон", 10000, 20)
+
+
 @pytest.fixture
 def item_csv():
     return Item.instantiate_from_csv()
+
+
+@pytest.fixture
+def phone():
+    return Phone("iPhone 14", 120_000, 5, 2)
+
+
+class Phone1:
+    def __init__(self, name: str, price: float, quantity: int) -> None:
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+phone1 = Phone1("iPhone 14", 120000, 5)
+@pytest.fixture
+def phone1():
+    return Phone1("iPhone 14", 120000, 5)
 
 
 def test_calc_total_price(item):
@@ -48,6 +68,20 @@ def test_self_repr(item):
 def test_self_str(item):
     assert item.__str__() == 'Смартфон'
 
+
+def test_add_quantity(item, phone):
+    assert item.__add__(phone) == 25
+    assert phone + item == 25
+
+
+# class Phone1:
+#     def __init__(self, name: str, price: float, quantity: int) -> None:
+#         self.name = name
+#         self.price = price
+#         self.quantity = quantity
+
+def test_add_quantity1(item, phone1):
+    assert item + phone1 == AssertionError('Объект должен принадлежать к классу Item или Phone')
 
 
 
