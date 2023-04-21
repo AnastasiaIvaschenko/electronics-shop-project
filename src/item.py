@@ -1,6 +1,9 @@
 import csv
 from os import path
 
+
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -66,8 +69,13 @@ class Item:
         """
         Применяет установленную скидку для конкретного товара.
         """
-        price = self.price * self.pay_rate
-        return price
+        self.price *= self.pay_rate
+        # return self.price
 
-#Item.instantiate_from_csv()
-#print(len(Item.all))
+
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise AssertionError('Объект должен принадлежать к классу Item или Phone')
+
+
