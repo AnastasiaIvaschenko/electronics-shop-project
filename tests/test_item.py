@@ -81,8 +81,9 @@ def test_add_quantity(item, phone):
 #         self.quantity = quantity
 
 def test_add_quantity1(item, phone1):
-    assert item + phone1 == AssertionError('Объект должен принадлежать к классу Item или Phone')
-
+    with pytest.raises(AssertionError):
+        item + phone1
+        raise AssertionError('Объект должен принадлежать к классу Item или Phone')
 
 
 

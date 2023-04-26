@@ -13,6 +13,7 @@ class Item:
 
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
+        super().__init__()
         self.__name = name #приватный атрибут имени
         self.price = price
         self.quantity = quantity
@@ -70,12 +71,13 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
-        # return self.price
+        return self.price
 
 
     def __add__(self, other):
         if isinstance(other, Item):
             return self.quantity + other.quantity
         raise AssertionError('Объект должен принадлежать к классу Item или Phone')
+
 
 
