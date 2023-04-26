@@ -29,16 +29,3 @@ class Keyboard(Item, MixinLang):
     def __init__(self, name: str, price: float, quantity: int) -> None:
         super().__init__(name, price, quantity)
 
-
-
-
-
-# lang1 = Keyboard('Dark Project KD87A', 9600, 5)
-# lang1.change_lang()
-# print(lang1.language)
-# lang1.change_lang()
-# print(lang1.language)
-# lang1.change_lang()
-# print(lang1.language)
-# lang1.language = 'CH'
-# print(lang1.language)
