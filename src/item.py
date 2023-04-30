@@ -2,8 +2,6 @@ import csv
 from os import path
 
 
-
-
 class Item:
     """
     Класс для представления товара в магазине.
@@ -18,13 +16,7 @@ class Item:
         self.price = price
         self.quantity = quantity
         Item.all.append(self)
-        """
-        Создание экземпляра класса item.
 
-        :param name: Название товара.
-        :param price: Цена за единицу товара.
-        :param quantity: Количество товара в магазине.
-        """
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
 
@@ -35,10 +27,20 @@ class Item:
     def instantiate_from_csv(cls):
         '''класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv'''
         cls.all.clear()
-        with open(path.join('..','src','items.csv'), 'r', encoding='CP1251', newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                cls(row['name'], row['price'], row['quantity'])
+        '''если файл `items.csv`, из которого по-умолчанию считываются данные, не найден → 
+        выбрасывается исключение `FileNotFoundError` с сообщением “_Отсутствует файл items.csv_"'''
+        try:
+            with open(path.join('..', 'src', 'items.csv'), 'r', encoding='CP1251', newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    '''если файл `item.csv` поврежден (например, отсутствует одна из колонок данных) → 
+                    выбрасывается исключение `InstantiateCSVError` с сообщением “_Файл item.csv поврежден_”'''
+                    try:
+                        cls(row['name'], row['price'], row['quantity'])
+                    except:
+                        raise InstantiateCSVError
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл items.csv")
 
     @staticmethod
     def string_to_number(data):
@@ -80,4 +82,9 @@ class Item:
         raise AssertionError('Объект должен принадлежать к классу Item или Phone')
 
 
+class InstantiateCSVError(ValueError, KeyError):
+    def __init__(self):
+        self.message = 'Файл items.csv поврежден'
+    def __str__(self):
+        return self.message
 
